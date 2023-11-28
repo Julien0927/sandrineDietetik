@@ -1,0 +1,65 @@
+ {% set currentPage = app.request.attributes.get('_route') %}
+{% set currentRoute = app.request.attributes.get('_route') %}
+
+ <nav class="navbar bg-body-tertiary">
+   <div class="container-fluid navbar navColor">
+     <a class="navbar-brand mx-3" href="{{ path('app_main')}}"><img class="logo" src="{{ asset('assets/images/icons82-60.png')}}"></a>
+    <div class="d-block">
+    <h1 class="navTitle d-flex text-align-center">Diététicienne Nutritionniste</h1>
+      {% if app.user %}
+        <h5 class="d-flex justify-content-center">Bonjour {{ app.user.firstname }} {{ app.user.lastname }}</h5>
+      {% endif %}
+    </div>
+    <button class="navbar-toggler mx-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Navigation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+          {% if app.user %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('app_logout')}}">Me déconnecter</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
+            </li>
+          {% endif %}
+
+          {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('app_register')}}">Inscription</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('admin')}}">Tableau de bord</a>
+            </li>
+          {% endif %}
+
+            <li class="nav-item ">
+              <a class="nav-link {% if currentPage == 'app_main'%}active{%endif%}" href="{{ path('app_main')}}">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if currentPage == 'app_recipe'%}active{%endif%}" href="{{ path('app_recipe')}}">Recettes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if currentPage == 'app_service'%}active{%endif%}" href="{{ path('app_service')}}">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if currentPage == 'app_contact'%}active{%endif%}" href="{{ path('app_contact')}}">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if currentPage == 'app_mentions'%}active{%endif%}" href="{{ path('app_mentions')}}">Mentions légales</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if currentPage == 'app_privacy'%}active{%endif%}" href="{{ path('app_privacy')}}">Politique de confidentialité</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+
+
+<section class="container">
+    <div class="d-flex justify-content-center mb-3">
+        <h1 class="titleRecipe rounded text-center mt-2 pt-1">Contact</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-6">
+        {{ form_start(contactForm) }}
+            <fieldset class="contact mb-3">
+                {{ form_row(contactForm.firstname) }}
+                {{ form_row(contactForm.lastname) }}
+                {{ form_row(contactForm.email) }}
+                {{ form_row(contactForm.message, {
+                    label: 'Message'
+                }) }}
+            </fieldset>
+
+        {{ form_end(contactForm) }}
+        </div>
+    </div>
+</section>
+{% endblock %}

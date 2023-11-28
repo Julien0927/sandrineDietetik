@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-center mt-5">
+    <h1 class="titleRecipe rounded text-center pt-2">Recettes</h1>
+</div>
+<div class="container d-flex justify-content-center col-md-12 mt-5">
+    <div class="fontCard row gap-5 ">
+        {% for recipe in recipes %}
+            <div class="card mb-3" style="max-width: 600px;">
+                <div class="row g-0">
+                    <div class="col-md-7 mt-auto">
+                        <div class="card-body">
+                            <h5 class="card-title">{{recipe.title}}</h5>
+                            <p class="card-text">{{ recipe.description|striptags }}</p>
+
+                        {% for allergenType in recipe.allergenType%}
+                            <p class="card-text fw-bold">Risques allergènes : 
+                            {{allergenType.type|default('Aucun allergènes')}}</p>
+                        {% endfor %}
+
+                        {% for dietType in recipe.dietType%}
+                            <p class="card-text fw-bold color-text-success">Régimes : 
+                            {{dietType.type|default('Aucune régime particuliers')}}</p>
+                        {% endfor %}
+                            <a href="{{ path('app_fullrecipe', {'id': recipe.id})}}" class="btn px-5 mt-3">Voir</a>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="{{ asset('assets/images/Recipes/' ~ recipe.picture)}}" class="img-fluid rounded-end mx-2" alt="{{ recipe.title }}">
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+                            <img src="{{ asset('assets/images/temps-32.png')}}"  alt="" title="Temps de préparation">{{recipe.preparationTime}}
+                            <img src="{{ asset('assets/images/cuisson-32.png')}}" alt="" title="Temps de cuisson">{{recipe.cookingTime}}
+                            <img src="{{ asset('assets/images/repos32.png')}}"  alt="" title="Temps de repos">{{recipe.timeOfRest}}
+                        </div>
+                        <div class="note d-flex justify-content-center mt-5">
+                            <div class="d-block text-center">
+                                <h5>Note globale : </h5>
+                                <h5>{{ recipe.getAverageNote()|default('Aucune note') }}/5</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                           {%for score in recipe.getNote() %}
+                                {%if loop.first %}
+                                    <p>"{{ score.getOpinion()|default('Aucune note') }}"</p>
+                                {%endif%}
+
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div> 
+    </div>
+</div>
+{% endblock %}

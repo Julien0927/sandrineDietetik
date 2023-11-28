@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+{% for flashMessage in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+    <h1 class="title d-flex justify-content-center col-md-12" >Cabinet Sandrine Coupart</h1>
+    <hr>
+    <div class="container mt-5">
+        <div class="row g-5">
+            <section class="col-md-6">
+                <h2 class="d-flex justify-content-center mb-3">À PROPOS</h2>
+                <div class="d-flex">
+                    <img class="photo" src="{{ asset('assets/images/photo-Sandrine.jpg')}}">
+                    <p class="text-align-center m-4">Je suis Sandrine Coupart, une nutritionniste passionnée par l'art de bien manger pour une vie épanouissante. 
+                    Mon objectif est de vous guider vers une meilleure santé, un bien-être durable et une compréhension profonde de la nutrition.
+                        <a class="btn btn-md d-flex justify-content-center mt-5 mx-5" href="{{ path('app_recipe')}}">Voir les recettes</a>
+                </div>
+            </section>
+            <section class="col-md-6">
+                <div class="services">
+                    <h2 class="text-center pt-3">MES SERVICES</h2>
+                    <p class=" text-align-center pt-4 px-3">Diététicienne nutritionniste dévouée à vous guider vers une vie plus saine grâce à une alimentation équilibrée. 
+                    Mon objectif est de vous aider à atteindre vos objectifs de bien-être et de santé
+                     en créant des plans nutritionnels personnalisés adaptés à votre style de vie, à vos besoins et à vos préférences.
+                    </p>
+                    <div class="d-flex justify-content-end p-3">
+                        <a class="btn" href="{{ path('app_service')}}">Accéder aux services</a>
+                    </div>
+                </div>
+            </section>
+         </div>
+    </div>
+<div class="gallery-wrapper mt-5">
+  <div class="gallery-scroll">
+    <div class="gallery">
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette1.jpg')}}" alt="Image" />
+      </div>
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette2.jpg')}}" alt="Image" />
+      </div>
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette3.jpg')}}" alt="Image" />
+      </div>
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette4.jpg')}}" alt="Image" />
+      </div>
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette5.jpg')}}" alt="Image" />
+      </div>
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette6.jpg')}}" alt="Image" />
+      </div>
+      <div class="item">
+        <img src="{{ asset('assets/images/Recipes/recette7.jpg')}}" alt="Image" />
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

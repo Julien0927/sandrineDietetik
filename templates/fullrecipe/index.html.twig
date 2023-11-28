@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette complète{% endblock %}
+
+{% block body %}
+<div class="fullRecipe d-flex ">
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-6">
+        <div class="card-body">
+          <h1 class="card-title">{{recipe.title}}</h1>
+          <hr>
+          <h3 class="fullcard-text">Description </h3>
+          <p>{{recipe.description | striptags}}</p>
+
+          <h3 class="fullcard-text">Ingrédients</h3>
+          {% set stepsFormatted = recipe.ingredients | replace({',': '</li><li>'}) %}
+          <ul>
+            <li>{{ stepsFormatted | raw }}</li>
+          </ul>
+
+          <h3 class="fullcard-text">Etapes</h3>
+          {% set stepsFormatted = recipe.steps | replace({',': '</li><li>'}) %}
+          <ol>
+            <li>{{ stepsFormatted | raw }}</li>
+          </ol>
+          <hr>
+          <h3 class="fullcard-text">Risques allergènes</h3>
+          {% for allergenType in recipe.allergenType %}
+          <p>{{allergenType.type|default('Aucun allergène')}}</p>
+          {% endfor %}
+
+          <h3 class="fullcard-text">Régime alimentaire</h3>
+          {% for dietType in recipe.dietType %}
+          <p>{{dietType.type|default('Aucun régime particuliers')}}</p>
+          {% endfor %}
+
+          <!--Début partie avis-->
+          <div class="d-flex justify-content-center">
+            <a href="{{ path('app_recipe_note', {'id': recipe.id})}}" class="btn btn-primary">Donner mon avis</a>
+          </div>
+          <!--Fin partie avis-->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <img src="{{ asset('assets/images/Recipes/' ~ recipe.picture)}}" class="card-img" alt="...">
+        <div class="d-flex justify-content-around gap-2 mt-3">
+          <img src="{{ asset('assets/images/temps-32.png')}}"  alt="" title="Temps de préparation">{{recipe.preparationTime}}
+          <img src="{{ asset('assets/images/cuisson-32.png')}}" alt="" title="Temps de cuisson">{{recipe.cookingTime}}
+          <img src="{{ asset('assets/images/repos32.png')}}"  alt="" title="Temps de repos">{{recipe.timeOfRest}}
+        </div>
+        <div class="note d-flex justify-content-center mt-5">
+          <h5>Note globale : {{ recipe.getAverageNote()|default('Aucune note') }}/5</h5>
+        </div>
+        <div class="d-flex justify-content-center">
+            <form class="d-block mt-2 mb-3">
+              <fieldset class="text-center">
+                <legend class="com rounded">Commentaire(s)</legend>
+                {%for score in recipe.getNote() %}
+                    <label>"{{ score.getOpinion()|default('Aucun commentaire') }}"</label><br>
+                {%endfor%}
+              </fieldset>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
